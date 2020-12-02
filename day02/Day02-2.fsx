@@ -10,20 +10,11 @@ type PasswordPolicy =
         Password: string
     }
 
-"asdf:qwer".Split(':')
-
 let parsePolicy (policy:string) =
-    let (rules, password) = match (policy.Split(':')) with
-    | [|rules; password|] -> (rules, password)
-    | _ -> failwith "Invalid policy"
-
-    let (nums, char) = match (rules.Split(' ')) with
-    | [|nums; char|] -> (nums, char)
-    | _ -> failwith "Invalid policy"
-
-    let (eqLoc, difLoc) = match (nums.Split('-')) with
-    | [|eqLoc; difLoc|] -> (eqLoc |> int, difLoc |> int)
-    | _ -> failwith "Invalid policy"
+    let (eqLoc, difLoc, char, password) =
+        match (policy.Split([|'-'; ' '; ':'|])) with
+        | [|eqLoc; difLoc; char; _; password|] -> (eqLoc |> int, difLoc |> int, char, password)
+        | _ -> failwith "Invalid policy"
 
     {
         EqualsLocation = eqLoc

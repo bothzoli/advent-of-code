@@ -10,20 +10,13 @@ type PasswordPolicy =
         Password: string
     }
 
-"asdf:qwer".Split(':')
+"3-4 p: bxptpp".Split([|'-'; ' '; ':'|])
 
 let parsePolicy (policy:string) =
-    let (rules, password) = match (policy.Split(':')) with
-    | [|rules; password|] -> (rules, password)
-    | _ -> failwith "Invalid policy"
-
-    let (nums, char) = match (rules.Split(' ')) with
-    | [|nums; char|] -> (nums, char)
-    | _ -> failwith "Invalid policy"
-
-    let (minNum, maxNum) = match (nums.Split('-')) with
-    | [|minNum; maxNum|] -> (minNum |> int, maxNum |> int)
-    | _ -> failwith "Invalid policy"
+    let (minNum, maxNum, char, password) =
+        match (policy.Split([|'-'; ' '; ':'|])) with
+        | [|minNum; maxNum; char; _; password|] -> (minNum |> int, maxNum |> int, char, password)
+        | _ -> failwith "Invalid policy"
 
     {
         MinNumber = minNum
