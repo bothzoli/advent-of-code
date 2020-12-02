@@ -1,6 +1,6 @@
 open System.IO
 
-let passwordPolicies = "input.txt" |> File.ReadAllLines |> Array.toList
+let passwordPolicies = "input.txt" |> File.ReadAllLines |> Array.toSeq
 
 type PasswordPolicy =
     {
@@ -24,8 +24,8 @@ let parsePolicy (policy:string) =
     }
 
 let validatePolicy policy =
-    let equalsChar = policy.Password.[policy.EqualsLocation] |> string
-    let diffChar = policy.Password.[policy.DiffersLocation] |> string
+    let equalsChar = policy.Password.[policy.EqualsLocation - 1] |> string
+    let diffChar = policy.Password.[policy.DiffersLocation - 1] |> string
     (equalsChar = policy.Character && diffChar <> policy.Character) || (equalsChar <> policy.Character && diffChar = policy.Character)
 
 parsePolicy "3-4 p: bxptpp"
@@ -42,6 +42,6 @@ parsePolicy "2-9 c: ccccccccc"
 
 
 passwordPolicies
-|> List.map (parsePolicy >> validatePolicy)
-|> List.filter (id)
-|> List.length
+|> Seq.map (parsePolicy >> validatePolicy)
+|> Seq.filter (id)
+|> Seq.length

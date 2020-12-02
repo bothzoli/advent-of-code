@@ -1,21 +1,21 @@
 open System.IO
 
-let numbers = "input.txt" |> File.ReadAllLines |> List.ofArray |> List.map (int)
+let numbers = "input.txt" |> File.ReadAllLines |> Seq.ofArray |> Seq.map (int)
 
 // Pairs that add up to 2020
 
 (numbers, numbers)
-||> List.allPairs
-|> List.filter(fun (fst, snd) -> fst + snd = 2020)
-|> List.map(fun (fst, snd) -> fst * snd)
-|> List.head
+||> Seq.allPairs
+|> Seq.filter(fun (fst, snd) -> fst + snd = 2020)
+|> Seq.map(fun (fst, snd) -> fst * snd)
+|> Seq.head
 
 
 // 3-tuples that add up to 2020
 
 (numbers, numbers)
-||> List.allPairs
-|> List.allPairs numbers
-|> List.filter(fun (fst, (snd, thd)) -> fst + snd + thd = 2020)
-|> List.map(fun (fst, (snd, thd)) -> fst * snd * thd)
-|> List.head
+||> Seq.allPairs
+|> Seq.allPairs numbers
+|> Seq.filter(fun (fst, (snd, thd)) -> fst + snd + thd = 2020)
+|> Seq.map(fun (fst, (snd, thd)) -> fst * snd * thd)
+|> Seq.head

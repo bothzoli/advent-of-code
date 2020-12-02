@@ -1,6 +1,6 @@
 open System.IO
 
-let passwordPolicies = "input.txt" |> File.ReadAllLines |> Array.toList
+let passwordPolicies = "input.txt" |> File.ReadAllLines |> Array.toSeq
 
 type PasswordPolicy =
     {
@@ -38,6 +38,6 @@ parsePolicy "3-4 p: bxptpp"
 
 
 passwordPolicies
-|> List.map (parsePolicy >> validatePolicy)
-|> List.filter (id)
-|> List.length
+|> Seq.map (parsePolicy >> validatePolicy)
+|> Seq.filter (id)
+|> Seq.length
