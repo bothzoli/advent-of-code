@@ -9,7 +9,7 @@ let testInput = linesFromFile "test.txt"
 
 let lineLength input = input |> (Seq.head >> Seq.length)
 
-let indices lineLength = 
+let indices lineLength =
     Seq.initInfinite (fun index ->
         index * 3 % lineLength)
 

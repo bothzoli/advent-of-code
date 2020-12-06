@@ -42,13 +42,18 @@ realFile
 |> Seq.max
 
 
-let getMissingFromThrees input =
+let whereMissingFromThreeWindowed input =
     match input with
     | [|a; b; c |] -> not (a + 1L = b && b + 1L = c)
+
+let getMissingFromThreeWindowed input =
+    match input with
+    | [|a; b; c |] -> if a + 1L = b then b + 1L else a + 1L
 
 realFile
 |> Seq.map fromBoardingToDecimal
 |> Seq.sort
 |> Seq.windowed 3
-|> Seq.filter getMissingFromThrees
+|> Seq.filter whereMissingFromThreeWindowed
 |> Seq.head
+|> getMissingFromThreeWindowed

@@ -7,7 +7,7 @@ let linesFromFile filepath =
 
 let lineLength input = input |> (Seq.head >> Seq.length)
 
-let indices input right down = 
+let indices input right down =
     let length = lineLength input
     Seq.initInfinite (fun index ->
         if index % down = 0 then (index / down) * right % length else -1)
