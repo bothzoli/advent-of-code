@@ -42,28 +42,62 @@ let getAccumulatorIncrement commandLine =
     | Acc -> commandLine.Increment
     | _ -> 0
 
-let jumpList = testFile |> Seq.mapi splitLine
+let jumpSequence = testFile |> Seq.mapi splitLine
 
-jumpList |> Seq.toList |> List.length
+jumpSequence |> Seq.toList |> List.length
 
 let generateFlipSequence length index =
     seq {
         for i in 0..length -> i = index
     }
 
-let testLength = jumpList |> Seq.toList |> List.length
+let testLength = jumpSequence |> Seq.toList |> List.length
 
 let flipSequences length =
     seq { for i in -1..length -> i}
-    |> Seq.map (fun i -> generateFlipSequence testLength i)
+    |> Seq.map (fun i -> generateFlipSequence length i)
 
 flipSequences testLength
 
 let flipInstruction commandLine =
     match commandLine.Instruction with
-    | Nop -> { commandLine with Instruction = Jmp }
-    | Jmp -> { commandLine with Instruction = Nop }
+    | Nop -> { commandLine with Instruction = Jmp; NextIndex = commandLine.CurrentIndex + commandLine.Increment }
+    | Jmp -> { commandLine with Instruction = Nop; NextIndex = commandLine.CurrentIndex + 1 }
     | Acc -> commandLine
 
-flipSequences testLength
-|> Seq.map (fun s -> Seq.map2 (fun c f -> if f then flipInstruction c else c) jumpList s)
+jumpSequence
+
+let isCircular jumpSequence =
+    let rec isCircular (jumpList: CommandLine list) visitedIndices nextIndex =
+        if visitedIndices |> Set.contains nextIndex
+        then true
+        else
+            if nextIndex >= jumpList.Length then false
+            else isCircular jumpList (visitedIndices |> Set.add nextIndex) jumpList.[nextIndex].NextIndex
+
+    isCircular (jumpSequence |> Seq.toList) Set.empty 0
+
+isCircular jumpSequence
+
+let fixedSequence =
+    flipSequences (jumpSequence |> Seq.length)
+    |> Seq.map (fun s -> Seq.map2 (fun c f -> if f then flipInstruction c else c) jumpSequence s)
+    |> Seq.filter (not << isCircular)
+    |> Seq.head
+
+let realJumpSequence = (File.ReadLines "input.txt") |> Seq.mapi splitLine
+
+let fixedRealSequence =
+    flipSequences (realJumpSequence |> Seq.length)
+    |> Seq.map (fun s -> Seq.map2 (fun c f -> if f then flipInstruction c else c) realJumpSequence s)
+    |> Seq.filter (not << isCircular)
+    |> Seq.head
+
+let fixedRealJumpList = fixedRealSequence |> Seq.toList
+
+
+let rec getAccumulatedValue (jumpList: CommandLine list) nextIndex =
+    if nextIndex >= jumpList.Length then 0
+    else getAccumulatorIncrement (jumpList.[nextIndex]) + (getAccumulatedValue jumpList jumpList.[nextIndex].NextIndex)
+
+getAccumulatedValue fixedRealJumpList 0
