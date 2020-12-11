@@ -6,15 +6,29 @@ type Coordinates = int * int
 
 type Place =
     | Floor
-    | Seat of IsOccupied : bool * Neighbours : Coordinates list
+    | Seat of IsOccupied : bool
 
 let isOccupiedSeat (place: Place) =
     match place with
-    | Seat(isOccupied, _) -> isOccupied
+    | Seat(isOccupied) -> isOccupied
     | Floor -> false
 
-let getNeighbourCoordinates (rowLength, numberOfRows) (position: Coordinates) =
-    let (y, x) = position
+let charToPlace c =
+    match c with
+    | '.' -> Floor
+    | 'L' -> Seat(false)
+    | _ -> failwith "invalid input"
+
+let testPlaces = testFile |> Seq.map Seq.toList |> Seq.toList
+
+let getInitialState places =
+    places
+    |> List.map (fun l ->
+        l |> List.map (charToPlace))
+
+let getOccupiedNeighbourCount currentState y x =
+    let rowLength = currentState |> List.length
+    let numberOfRows = currentState |> List.head |> List.length
 
     let leftNeighbour = Coordinates(y, x - 1)
     let rightNeighbour = Coordinates(y, x + 1)
@@ -28,71 +42,48 @@ let getNeighbourCoordinates (rowLength, numberOfRows) (position: Coordinates) =
     let lowerLeftNeighbour = Coordinates(y + 1, x - 1)
     let lowerRightNeighbour = Coordinates(y + 1, x + 1)
 
-    [upperLeftNeighbour; upperNeighbour; upperRightNeighbour;
-    leftNeighbour; rightNeighbour;
-    lowerLeftNeighbour; lowerNeighbour; lowerRightNeighbour]
-    |> List.filter (fun (x, y) -> (x < 0 || x >= rowLength || y < 0 || y >= numberOfRows) |> not)
-
-getNeighbourCoordinates (3, 3) (Coordinates(1, 1))
-getNeighbourCoordinates (3, 3) (Coordinates(2, 2))
-getNeighbourCoordinates (3, 3) (Coordinates(0, 0))
-
-
-let charToPlace places y x c =
-    let numberOfRows = places |> List.length
-    let rowLength = places |> List.head |> List.length
-    match c with
-    | '.' -> Floor
-    | 'L' -> Seat(false, getNeighbourCoordinates (numberOfRows, rowLength) (Coordinates(y, x)))
-    | _ -> failwith "invalid input"
-
-let testPlaces = testFile |> Seq.map Seq.toList |> Seq.toList
-
-let getInitialState places =
-    places
-    |> List.mapi (fun y l ->
-        l |> List.mapi (fun x c ->
-            charToPlace places y x c))
+    let neighbours =
+        [upperLeftNeighbour; upperNeighbour; upperRightNeighbour;
+        leftNeighbour; rightNeighbour;
+        lowerLeftNeighbour; lowerNeighbour; lowerRightNeighbour]
+        |> List.filter (fun (x, y) -> (x < 0 || x >= rowLength || y < 0 || y >= numberOfRows) |> not)
+    
+    neighbours
+    |> List.map (fun (y, x) -> isOccupiedSeat currentState.[y].[x])
+            |> List.filter (id)
+            |> List.length
 
 let testInitialState = getInitialState testPlaces
 
-testInitialState.[0].[9]
-
 let transitionSeatState (currentState: Place list list) =
-    let transitionSeatState' isOccupied neighbours =
+    let transitionSeatState' y x isOccupied =
         match isOccupied with
         | true ->
-            neighbours
-            |> List.map (fun (y, x) -> isOccupiedSeat currentState.[y].[x])
-            |> List.filter (id)
-            |> List.length
+            getOccupiedNeighbourCount currentState y x
             |> (fun occupiedNeighbours ->
                 if occupiedNeighbours >= 4
-                then Seat(false, neighbours)
-                else Seat(true, neighbours))
+                then Seat(false)
+                else Seat(true))
         | false ->
-            neighbours
-            |> List.map (fun (y, x) -> isOccupiedSeat currentState.[y].[x])
-            |> List.filter (id)
-            |> List.length
+            getOccupiedNeighbourCount currentState y x
             |> (fun occupiedNeighbours ->
                 if occupiedNeighbours <> 0
-                then Seat(false, neighbours)
-                else Seat(true, neighbours))
+                then Seat(false)
+                else Seat(true))
 
     currentState
     |> List.mapi (fun y l ->
         l |> List.mapi (fun x _ ->
             match currentState.[y].[x] with
             | Floor -> Floor
-            | Seat(isOccupied, neighbours) -> transitionSeatState' isOccupied neighbours))
+            | Seat(isOccupied) -> transitionSeatState' y x isOccupied))
 
 let printSeatState seatState =
     seatState
     |> List.map (fun l ->
         l |> List.map (fun p ->
             match p with
-            | Seat(isOccupied, _) -> if isOccupied then '#' else 'L'
+            | Seat(isOccupied) -> if isOccupied then '#' else 'L'
             | Floor -> '.'))
 
 printSeatState testInitialState
@@ -116,7 +107,7 @@ let countOccupiedSeats seatState =
         let rowCount = l |> List.fold (fun sInner p ->
             match p with
             | Floor -> sInner
-            | Seat(isOccupied, _) -> if isOccupied then sInner + 1 else sInner) 0
+            | Seat(isOccupied) -> if isOccupied then sInner + 1 else sInner) 0
         rowCount + sOuter ) 0
 
 getFinalState testInitialState
