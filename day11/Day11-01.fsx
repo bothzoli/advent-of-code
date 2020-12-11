@@ -28,32 +28,42 @@ let getInitialState places =
     |> List.map (fun l ->
         l |> List.map (charToPlace))
 
+type Directions = UpLeft | Up | UpRight | Left | Right | DownLeft | Down | DownRight
+
+
+let getNeighbourCoordinates currentState direction y x =
+    let numberOfRows = currentState |> List.length
+    let rowLength = currentState |> List.head |> List.length
+
+    let (ny, nx) = match direction with
+    | UpLeft    -> Coordinates(y - 1,   x - 1)
+    | Up        -> Coordinates(y - 1,   x    )
+    | UpRight   -> Coordinates(y - 1,   x + 1)
+    | Left      -> Coordinates(y    ,   x - 1)
+    | Right     -> Coordinates(y    ,   x + 1)
+    | DownLeft  -> Coordinates(y + 1,   x - 1)
+    | Down      -> Coordinates(y + 1,   x    )
+    | DownRight -> Coordinates(y + 1,   x + 1)
+
+    if (nx < 0 || nx >= rowLength || ny < 0 || ny >= numberOfRows)
+    then None
+    else Some(Coordinates(ny, nx))
+
+let getOccupiedNeighbour currentState direction y x =
+    match getNeighbourCoordinates currentState direction y x with
+    | Some(ny, nx) ->
+        match currentState.[ny].[nx] with
+        | OccupiedSeat -> true
+        | UnoccupiedSeat -> false
+        | Floor -> false
+    | None -> false
+
 let getOccupiedNeighbourCount currentState y x =
-    let rowLength = currentState |> List.length
-    let numberOfRows = currentState |> List.head |> List.length
-
-    let leftNeighbour = Coordinates(y, x - 1)
-    let rightNeighbour = Coordinates(y, x + 1)
-
-    let upperNeighbour = Coordinates(y - 1, x)
-    let lowerNeighbour = Coordinates(y + 1, x)
-
-    let upperLeftNeighbour = Coordinates(y - 1, x - 1)
-    let upperRightNeighbour = Coordinates(y - 1, x + 1)
-
-    let lowerLeftNeighbour = Coordinates(y + 1, x - 1)
-    let lowerRightNeighbour = Coordinates(y + 1, x + 1)
-
-    let neighbours =
-        [upperLeftNeighbour; upperNeighbour; upperRightNeighbour;
-        leftNeighbour; rightNeighbour;
-        lowerLeftNeighbour; lowerNeighbour; lowerRightNeighbour]
-        |> List.filter (fun (x, y) -> (x < 0 || x >= rowLength || y < 0 || y >= numberOfRows) |> not)
-    
-    neighbours
-    |> List.map (fun (y, x) -> isOccupiedSeat currentState.[y].[x])
-            |> List.filter (id)
-            |> List.length
+    [ UpLeft; Up; UpRight; Left; Right; DownLeft; Down; DownRight ]
+    |> List.map (fun dir ->
+        getOccupiedNeighbour currentState dir y x)
+    |> List.filter (id)
+    |> List.length
 
 let testInitialState = getInitialState testPlaces
 
@@ -92,12 +102,6 @@ let printSeatState seatState =
 
 printSeatState testInitialState
 
-transitionSeatState testInitialState
-|> transitionSeatState
-|> transitionSeatState
-|> transitionSeatState
-|> transitionSeatState
-|> printSeatState
 
 let rec getFinalState initialState =
     let newState = transitionSeatState initialState
@@ -124,12 +128,6 @@ let realFile = File.ReadLines "input.txt"
 let realPlaces = realFile |> Seq.map Seq.toList |> Seq.toList
 
 let realInitialState = getInitialState realPlaces
-
-realInitialState.[96].[0]
-
-realInitialState
-|> transitionSeatState
-|> printSeatState
 
 getFinalState realInitialState
 |> countOccupiedSeats
