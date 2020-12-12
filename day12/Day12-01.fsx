@@ -1,14 +1,10 @@
 open System.IO
-open System.Text.RegularExpressions
 
 
 type Direction = North | East | South | West
 
 type Instruction =
-    | MoveNorth of int
-    | MoveEast of int
-    | MoveSouth of int
-    | MoveWest of int
+    | Move of Direction * int
     | MoveForward of int
     | TurnRight
     | TurnLeft
@@ -47,36 +43,29 @@ let flipDirection direction =
 |> List.map turnLeft
 
 
-let (|ParseRegex|_|) regex str =
-   let m = Regex(regex).Match(str)
-   if m.Success
-   then Some (m.Groups.[1].Value, m.Groups.[2].Value |> int)
-   else None
+let parseInstruction (input : string) =
+    let direction = input |> Seq.head
+    let distance = input.Substring(1) |> int
 
-
-let parseInstruction input =
-    match input with
-    | ParseRegex "^(\w)(\d+)" (direction, distance) ->
-        match direction with
-        | "N" -> MoveNorth distance
-        | "E" -> MoveEast distance
-        | "S" -> MoveSouth distance
-        | "W" -> MoveWest distance
-        | "F" -> MoveForward distance
-        | "L" ->
-            match (distance % 360) with
-            | 90 -> TurnLeft
-            | 180 -> TurnAround
-            | 270 -> TurnRight
-            | 0 -> DoNothing
-            | _ -> failwith "Invalid input"
-        | "R" ->
-            match (distance % 360) with
-            | 90 -> TurnRight
-            | 180 -> TurnAround
-            | 270 -> TurnLeft
-            | 0 -> DoNothing
-            | _ -> failwith "Invalid input"
+    match direction with
+    | 'N' -> Move (North, distance)
+    | 'E' -> Move (East, distance)
+    | 'S' -> Move (South, distance)
+    | 'W' -> Move (West, distance)
+    | 'F' -> MoveForward distance
+    | 'L' ->
+        match (distance % 360) with
+        | 0 -> DoNothing
+        | 90 -> TurnLeft
+        | 180 -> TurnAround
+        | 270 -> TurnRight
+        | _ -> failwith "Invalid input"
+    | 'R' ->
+        match (distance % 360) with
+        | 0 -> DoNothing
+        | 90 -> TurnRight
+        | 180 -> TurnAround
+        | 270 -> TurnLeft
         | _ -> failwith "Invalid input"
     | _ -> failwith "Invalid input"
 
@@ -100,14 +89,12 @@ parseInstruction "R360"
 parseInstruction "R450"
 
 
-let moveShip direction distance currentPosition =
-    let (x, y) = currentPosition
-
+let moveShip direction distance (x, y) =
     match direction with
     | North -> (x + distance, y)
-    | East -> (x, y + distance)
+    | East  -> (x,            y + distance)
     | South -> (x - distance, y)
-    | West -> (x, y - distance)
+    | West  -> (x,            y - distance)
 
 let origin = (0, 0)
 
@@ -116,15 +103,12 @@ moveShip West 3 origin
 
 let applyInstruction (currentPosition, currentDirection) instruction =
     match instruction with
-    | MoveNorth(distance)   -> (moveShip North distance currentPosition, currentDirection)
-    | MoveEast(distance)    -> (moveShip East distance currentPosition, currentDirection)
-    | MoveSouth(distance)   -> (moveShip South distance currentPosition, currentDirection)
-    | MoveWest(distance)    -> (moveShip West distance currentPosition, currentDirection)
-    | MoveForward(distance) -> (moveShip currentDirection distance currentPosition, currentDirection)
-    | TurnRight             -> (currentPosition, turnRight currentDirection)
-    | TurnLeft              -> (currentPosition, turnLeft currentDirection)
-    | TurnAround            -> (currentPosition, flipDirection currentDirection)
-    | DoNothing             -> (currentPosition, currentDirection)
+    | Move(direction, distance) -> (moveShip direction distance currentPosition, currentDirection)
+    | MoveForward(distance)     -> (moveShip currentDirection distance currentPosition, currentDirection)
+    | TurnRight                 -> (currentPosition, turnRight currentDirection)
+    | TurnLeft                  -> (currentPosition, turnLeft currentDirection)
+    | TurnAround                -> (currentPosition, flipDirection currentDirection)
+    | DoNothing                 -> (currentPosition, currentDirection)
 
 let manhattanDistance (x, y) = abs x + abs y
 
