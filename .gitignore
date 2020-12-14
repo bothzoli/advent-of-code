@@ -1,5 +1,6 @@
 .ionide/
 **/input.txt
 **/test.txt
+**/test*.txt
 
 .fake
