@@ -50,3 +50,42 @@ input
 |> Array.map isNiceString
 |> Array.filter (id)
 |> Array.length
+
+
+let containsPairOfTwoLetters (input:string) =
+    input
+    |> Seq.pairwise
+    |> Seq.map (fun (a, b) -> "".Insert(0, a.ToString()).Insert(1, b.ToString()))
+    |> Seq.indexed
+    |> Seq.map (fun (i, subs) -> (subs, input.Substring(i + 2)))
+    |> Seq.map (fun (pattern, remaining) -> Regex.Match(remaining, pattern).Success)
+    |> Seq.fold (||) false
+
+containsPairOfTwoLetters "qjhvhtzxzqqjkmpb"
+containsPairOfTwoLetters "xxyxx"
+containsPairOfTwoLetters "uurcxstgmygtbstg"
+containsPairOfTwoLetters "ieodomkazucvgmuy"
+
+"ieodomkazucvgmuy"
+|> Seq.windowed 3
+|> Seq.map (fun ([|l; _; r|]) -> l = r)
+|> Seq.fold (||) false
+
+let containsRepeatingLetter (input: string) =
+    input
+    |> Seq.windowed 3
+    |> Seq.map (fun ([|l; _; r|]) -> l = r)
+    |> Seq.fold (||) false
+
+containsRepeatingLetter "qjhvhtzxzqqjkmpb"
+containsRepeatingLetter "xxyxx"
+containsRepeatingLetter "uurcxstgmygtbstg"
+containsRepeatingLetter "ieodomkazucvgmuy"
+
+let isNiceString2 input =
+    containsPairOfTwoLetters input && containsRepeatingLetter input
+
+input
+|> Array.map isNiceString2
+|> Array.filter (id)
+|> Array.length
