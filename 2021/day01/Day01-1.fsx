@@ -1,5 +1,7 @@
 open System.IO
 
+let input = File.ReadAllLines("input.txt") |> Array.map (int)
+
 let isIncrease (before, after) =
     if (after - before) > 0 then true
     else false
@@ -8,14 +10,9 @@ isIncrease(100, 200)
 isIncrease(200, 100)
 isIncrease(200, 200)
 
-let input = File.ReadAllLines("input.txt") |> Array.map (int)
-
 input
 |> Seq.pairwise
-|> Seq.map isIncrease
-|> Seq.filter id
-|> Seq.length
-
+|> Seq.sumBy (fun e -> if isIncrease e then 1 else 0)
 
 let isIncreaseThree (before, after) =
     let beforeSum = Array.sum before
@@ -25,6 +22,4 @@ let isIncreaseThree (before, after) =
 input
 |> Seq.windowed 3
 |> Seq.pairwise
-|> Seq.map isIncreaseThree
-|> Seq.filter id
-|> Seq.length
+|> Seq.sumBy (fun e -> if isIncreaseThree e then 1 else 0)
