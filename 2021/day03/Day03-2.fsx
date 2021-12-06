@@ -15,7 +15,7 @@ let mostCommonBitAt position input =
         line
         |> Array.skip position
         |> Array.take 1
-        |> (fun x -> x.[0]))
+        |> (fun x -> x[0]))
         |> Seq.sum
         |> (fun x -> if (x |> float) >= cutoffPoint then 1 else 0)
 
@@ -28,7 +28,7 @@ let getOxigenGeneratorRating input =
         if input.Length = 1
             then input
             else
-                let filteredInput = input |> Array.filter (fun x -> x.[position] = mostCommonBitAt position input)
+                let filteredInput = input |> Array.filter (fun x -> x[position] = mostCommonBitAt position input)
                 filterByMostCommonAt (position + 1) filteredInput
     
     filterByMostCommonAt 0 inputAsIntArray
@@ -43,7 +43,7 @@ let getCO2ScrubberRating input =
         if input.Length = 1
             then input
             else
-                let filteredInput = input |> Array.filter (fun x -> x.[position] = leastCommonBitAt position input)
+                let filteredInput = input |> Array.filter (fun x -> x[position] = leastCommonBitAt position input)
                 filterByLeastCommonAt (position + 1) filteredInput
     
     filterByLeastCommonAt 0 inputAsIntArray
