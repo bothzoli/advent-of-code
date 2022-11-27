@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <RootNamespace>AdventOfCode</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="Day01\Day01.fsx" />
+    <None Include="Day02\Day02-1.fsx" />
+    <None Include="Day02\Day02-2.fsx" />
+    <None Include="Day03\Day03-1.fsx" />
+    <None Include="Day03\Day03-2.fsx" />
+    <None Include="Day04\Day04-1.fsx" />
+    <None Include="Day04\Day04-2.fsx" />
+    <None Include="Day05\Day05.fsx" />
+    <None Include="Day06\Day06-1.fsx" />
+    <None Include="Day06\Day06-2.fsx" />
+    <None Include="Day07\Day07-1.fsx" />
+    <None Include="Day07\Day07-2.fsx" />
+    <None Include="Day08\Day08-1.fsx" />
+    <None Include="Day08\Day08-2.fsx" />
+    <None Include="Day09\Day09.fsx" />
+    <None Include="Day10\Day10-1.fsx" />
+    <None Include="Day10\Day10-2.fsx" />
+    <None Include="Day11\Day11-1.fsx" />
+    <None Include="Day11\Day11-2.fsx" />
+    <None Include="Day12\Day12-1.fsx" />
+    <None Include="Day12\Day12-2.fsx" />
+    <None Include="Day13\Day13-1.fsx" />
+    <None Include="Day13\Day13-2.fsx" />
+    <None Include="Day14\Day14-1.fsx" />
+    <None Include="Day14\Day14-2.fsx" />
+    <None Include="Day15\Day15-1.fsx" />
+    <None Include="Day16\Day16-1.fsx" />
+    <None Include="Day16\Day16-2.fsx" />
+    <None Include="Day17\Day17-1.fsx" />
+    <None Include="Day17\Day17-2.fsx" />
+  </ItemGroup>
+
+</Project>

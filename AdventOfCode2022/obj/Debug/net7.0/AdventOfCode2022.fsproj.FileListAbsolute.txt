@@ -1,0 +1,11 @@
+C:\Users\wd973464\source\repos\AdventOfCode\AdventOfCode2022\bin\Debug\net7.0\AdventOfCode2022.deps.json
+C:\Users\wd973464\source\repos\AdventOfCode\AdventOfCode2022\bin\Debug\net7.0\AdventOfCode2022.dll
+C:\Users\wd973464\source\repos\AdventOfCode\AdventOfCode2022\bin\Debug\net7.0\AdventOfCode2022.pdb
+C:\Users\wd973464\source\repos\AdventOfCode\AdventOfCode2022\obj\Debug\net7.0\AdventOfCode2022.fsproj.AssemblyReference.cache
+C:\Users\wd973464\source\repos\AdventOfCode\AdventOfCode2022\obj\Debug\net7.0\AdventOfCode2022.AssemblyInfoInputs.cache
+C:\Users\wd973464\source\repos\AdventOfCode\AdventOfCode2022\obj\Debug\net7.0\AdventOfCode2022.AssemblyInfo.fs
+C:\Users\wd973464\source\repos\AdventOfCode\AdventOfCode2022\obj\Debug\net7.0\AdventOfCode2022.fsproj.CoreCompileInputs.cache
+C:\Users\wd973464\source\repos\AdventOfCode\AdventOfCode2022\obj\Debug\net7.0\AdventOfCode2022.dll
+C:\Users\wd973464\source\repos\AdventOfCode\AdventOfCode2022\obj\Debug\net7.0\refint\AdventOfCode2022.dll
+C:\Users\wd973464\source\repos\AdventOfCode\AdventOfCode2022\obj\Debug\net7.0\AdventOfCode2022.pdb
+C:\Users\wd973464\source\repos\AdventOfCode\AdventOfCode2022\obj\Debug\net7.0\ref\AdventOfCode2022.dll

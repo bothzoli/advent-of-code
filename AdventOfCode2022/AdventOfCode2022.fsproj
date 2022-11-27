@@ -1,0 +1,63 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <RootNamespace>AdventOfCode</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="Day01\Day01-1.fsx" />
+    <None Include="Day01\Day01-2.fsx" />
+    <None Include="Day02\Day02-1.fsx" />
+    <None Include="Day02\Day02-2.fsx" />
+    <None Include="Day03\Day03-1.fsx" />
+    <None Include="Day03\Day03-2.fsx" />
+    <None Include="Day04\Day04-1.fsx" />
+    <None Include="Day04\Day04-2.fsx" />
+    <None Include="Day05\Day05-1.fsx" />
+    <None Include="Day05\Day05-2.fsx" />
+    <None Include="Day06\Day06-1.fsx" />
+    <None Include="Day06\Day06-2.fsx" />
+    <None Include="Day07\Day07-1.fsx" />
+    <None Include="Day07\Day07-2.fsx" />
+    <None Include="Day08\Day08-1.fsx" />
+    <None Include="Day08\Day08-2.fsx" />
+    <None Include="Day09\Day09-1.fsx" />
+    <None Include="Day09\Day09-2.fsx" />
+    <None Include="Day10\Day10-1.fsx" />
+    <None Include="Day10\Day10-2.fsx" />
+    <None Include="Day11\Day11-1.fsx" />
+    <None Include="Day11\Day11-2.fsx" />
+    <None Include="Day12\Day12-1.fsx" />
+    <None Include="Day12\Day12-2.fsx" />
+    <None Include="Day13\Day13-1.fsx" />
+    <None Include="Day13\Day13-2.fsx" />
+    <None Include="Day14\Day14-1.fsx" />
+    <None Include="Day14\Day14-2.fsx" />
+    <None Include="Day15\Day15-1.fsx" />
+    <None Include="Day15\Day15-2.fsx" />
+    <None Include="Day16\Day16-1.fsx" />
+    <None Include="Day16\Day16-2.fsx" />
+    <None Include="Day17\Day17-1.fsx" />
+    <None Include="Day17\Day17-2.fsx" />
+    <None Include="Day18\Day18-1.fsx" />
+    <None Include="Day18\Day18-2.fsx" />
+    <None Include="Day19\Day19-1.fsx" />
+    <None Include="Day19\Day19-2.fsx" />
+    <None Include="Day20\Day20-1.fsx" />
+    <None Include="Day20\Day20-2.fsx" />
+    <None Include="Day20\Day20-1.fsx" />
+    <None Include="Day20\Day20-2.fsx" />
+    <None Include="Day21\Day21-1.fsx" />
+    <None Include="Day21\Day21-2.fsx" />
+    <None Include="Day22\Day22-1.fsx" />
+    <None Include="Day22\Day22-2.fsx" />
+    <None Include="Day23\Day23-1.fsx" />
+    <None Include="Day23\Day23-2.fsx" />
+    <None Include="Day24\Day24-1.fsx" />
+    <None Include="Day24\Day24-2.fsx" />
+    <None Include="Day25\Day25-1.fsx" />
+    <None Include="Day25\Day25-2.fsx" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "HI1gNE+alp+rK64avB4LcDsAAUDlFOyJ+gGEfDcKQXunQeQ1d8GswO2kNUG7ymQEZnbj0tV8xDmXi0T9OJAv+A==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\wd973464\\source\\repos\\advent-of-code\\AdventOfCode2021\\AdventOfCode2021.fsproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\wd973464\\.nuget\\packages\\fsharp.core\\7.0.0\\fsharp.core.7.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <RootNamespace>AdventOfCode</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="Day01\Day01.fsx" />
+    <None Include="Day02\Day02.fsx" />
+    <None Include="Day03\Day03.fsx" />
+    <None Include="Day04\Day04.fsx" />
+    <None Include="Day05\Day05.fsx" />
+    <None Include="Day06\Day06.fsx" />
+    <None Include="Day07\Day07.fsx" />
+  </ItemGroup>
+
+</Project>
