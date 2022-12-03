@@ -6,12 +6,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="Day01\Day01-1.fsx" />
-    <None Include="Day01\Day01-2.fsx" />
+    <None Include="Day01\Day01fsx.fsx" />
+    <Content Include="Day01\test.txt" />
+    <Content Include="Day01\input.txt" />
     <None Include="Day02\Day02-1.fsx" />
+    <Content Include="Day02\test.txt" />
+    <Content Include="Day02\input.txt" />
     <None Include="Day02\Day02-2.fsx" />
-    <None Include="Day03\Day03-1.fsx" />
-    <None Include="Day03\Day03-2.fsx" />
+    <Content Include="Day03\test.txt" />
+    <Content Include="Day03\input.txt" />
+    <None Include="Day03\Day03.fsx" />
     <None Include="Day04\Day04-1.fsx" />
     <None Include="Day04\Day04-2.fsx" />
     <None Include="Day05\Day05-1.fsx" />
