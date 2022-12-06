@@ -19,10 +19,11 @@
     <Content Include="Day04\input.txt" />
     <Content Include="Day04\test.txt" />
     <None Include="Day04\Day04.fsx" />
-    <None Include="Day05\Day05-1.fsx" />
-    <None Include="Day05\Day05-2.fsx" />
-    <None Include="Day06\Day06-1.fsx" />
-    <None Include="Day06\Day06-2.fsx" />
+    <None Include="Day05\Day05.fsx" />
+    <Content Include="Day05\input.txt" />
+    <Content Include="Day05\test.txt" />
+    <Content Include="Day06\input.txt" />
+    <None Include="Day06\Day06.fsx" />
     <None Include="Day07\Day07-1.fsx" />
     <None Include="Day07\Day07-2.fsx" />
     <None Include="Day08\Day08-1.fsx" />
